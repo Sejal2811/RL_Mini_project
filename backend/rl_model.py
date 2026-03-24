@@ -15,7 +15,7 @@ def train_agent():
 
     epsilon = 0.2
     gamma = 1
-    episodes = 5000
+    episodes = 200
 
     def step(state, action):
         r,c = state
