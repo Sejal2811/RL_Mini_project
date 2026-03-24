@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html>
+<head>
+
+<title>AI Delivery Robot</title>
+
+<link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+
+</head>
+
+<body>
+
+<div class="container">
+
+<h1>🤖 AI Delivery Robot (Monte Carlo RL)</h1>
+
+<button onclick="runRL()">Run Simulation</button>
+
+<div class="grid" id="grid"></div>
+
+</div>
+
+<script>
+
+let grid=document.getElementById("grid")
+
+for(let i=0;i<4;i++){
+for(let j=0;j<4;j++){
+
+let cell=document.createElement("div")
+cell.className="cell"
+cell.id=`${i}-${j}`
+
+grid.appendChild(cell)
+
+}
+}
+
+document.getElementById("0-0").classList.add("start")
+document.getElementById("3-3").classList.add("goal")
+document.getElementById("1-1").classList.add("risky")
+document.getElementById("2-3").classList.add("risky")
+
+async function runRL(){
+
+let res=await fetch("/run")
+let data=await res.json()
+
+let path=data.path
+
+path.forEach((p,i)=>{
+
+setTimeout(()=>{
+
+let id=p[0]+"-"+p[1]
+document.getElementById(id).classList.add("path")
+
+},i*500)
+
+})
+
+}
+
+</script>
+
+</body>
+</html>
